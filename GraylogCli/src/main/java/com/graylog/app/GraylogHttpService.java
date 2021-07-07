@@ -25,7 +25,7 @@ public class GraylogHttpService implements GraylogService {
 
 
     public void sendMessage() throws IOException, InterruptedException {
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(this.request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.statusCode());
         System.out.println(response.body());
     }
