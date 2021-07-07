@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class graylog_cli_test
+public class GraylogCliTest
 {
     /**
      * Rigorous Test :-)
