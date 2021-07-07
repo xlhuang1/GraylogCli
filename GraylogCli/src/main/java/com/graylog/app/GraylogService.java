@@ -1,10 +1,12 @@
 package com.graylog.app;
 
+import java.io.IOException;
+
 public interface GraylogService {
 
-    public void connect();
-    public void setConnection();
-    public void getConnection();
-    public void sendMessage();
+    public void sendMessage() throws IOException, InterruptedException;
+    public void setConnection(String string);
+    public String getConnection();
+    public void setMessage(String string);
 
 }

@@ -1,6 +1,6 @@
 package com.graylog.app;
 
 public interface GraylogParser {
-    public String loadFile();
+    public void loadFile(String path);
     public String getNextLine();
 }
