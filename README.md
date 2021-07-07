@@ -9,3 +9,16 @@ the contents into GELF format
 GraylogService is an interface which is used to define a method of transmitting the 
 messages that are created/read via parser to the Graylog server.
 A simple implementation is the GraylogHttpService class.
+
+BUILD:
+import the project into Intellij
+run "mvn clean install"
+RUN:
+then run the created jar file by using java command line
+> \# java -jar target/GraylogCli-1.0-SNAPSHOT.jar -p text -s http
+
+USAGE:
+Currently supported flags:
+-p | -parser : text - uses txt parser and file
+-s | -service : http - uses Graylog HTTP API
+-a | -address : specifies IP address and port for HTTP API - requires -s http flag.

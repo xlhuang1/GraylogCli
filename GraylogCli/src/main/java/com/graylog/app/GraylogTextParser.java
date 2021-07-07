@@ -28,7 +28,7 @@ public class GraylogTextParser implements GraylogParser {
         return null;
     }
 
-    public String prependBackslashToQuotes(String message) {
+    private String prependBackslashToQuotes(String message) {
         StringBuilder builder = new StringBuilder();
         for (char c : message.toCharArray()) {
             if (c == '{')

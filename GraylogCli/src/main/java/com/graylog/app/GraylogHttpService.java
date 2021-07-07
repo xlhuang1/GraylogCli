@@ -13,11 +13,15 @@ public class GraylogHttpService implements GraylogService {
     private HttpRequest request;
     private String connectURI = "http://192.168.0.25:12201/gelf";
 
-    public GraylogHttpService() {
+    public GraylogHttpService(String connectURI) {
         client = HttpClient.newBuilder()
                 .build();
+
+        String uri = "http://";
+        uri = uri.concat(connectURI).concat("/gelf");
+
         request = HttpRequest.newBuilder()
-                .uri(URI.create(connectURI))
+                .uri(URI.create(uri))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString("{ \"version\": \"1.1\", \"host\": \"example.org\", \"short_message\": \"hi\", \"level\": 5, \"_some_info\": \"foo\" }"))
                 .build();
