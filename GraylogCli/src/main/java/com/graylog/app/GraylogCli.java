@@ -101,6 +101,7 @@ public class GraylogCli
     }
 
     public static void Run() throws IOException, InterruptedException {
+        // goes through all lines and attempts to send through service.
         String x = parser.getNextLine();
         while (x != null) {
             x = parser.getNextLine();

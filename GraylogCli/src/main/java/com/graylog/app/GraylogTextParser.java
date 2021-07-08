@@ -35,6 +35,7 @@ public class GraylogTextParser implements GraylogParser {
     }
 
     private String prependBackslashToQuotes(String message) {
+        // appends backslashes to all double quotes, and also appends required json fields per GELF specification
         StringBuilder builder = new StringBuilder();
         for (char c : message.toCharArray()) {
             if (c == '{')
@@ -49,6 +50,9 @@ public class GraylogTextParser implements GraylogParser {
     }
 
     public String processFieldsForGELF(String message) {
+        // the input data has fields without preceding "_" underscore
+        // GELF specification requires that all custom fields start with underscore
+        // this matches all fields that precede a colon, and then prepends underscore to them.
         String p = "((\\w+)\":)+";
         Pattern p1 = Pattern.compile(p);
         Matcher m = p1.matcher(message);
