@@ -1,8 +1,6 @@
 package com.graylog.app;
 
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
-
+import org.apache.log4j.Level;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -16,6 +14,7 @@ public class GraylogTextParserTest {
     public void processFieldsForGELF() {
         // Given
         GraylogTextParser testing = new GraylogTextParser();
+        testing.setDebug(Level.INFO);
 
         // When
         String input = "{\"ClientDeviceType\": \"desktop\",\"ClientIP\": \"192.168.87.52\"}";
