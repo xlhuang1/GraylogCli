@@ -22,3 +22,8 @@ Currently supported flags:
 -p | -parser : text - uses txt parser and file
 -s | -service : http - uses Graylog HTTP API
 -a | -address : specifies IP address and port for HTTP API - requires -s http flag.
+-debug : true | false - enables debug log level DEBUG for all classes
+
+
+TODO:
+Still need to write implementation for chunking GELF messages that are too large. 

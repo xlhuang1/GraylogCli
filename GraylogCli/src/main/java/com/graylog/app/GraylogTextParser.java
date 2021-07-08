@@ -1,5 +1,9 @@
 package com.graylog.app;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -7,9 +11,10 @@ import java.util.regex.Pattern;
 
 public class GraylogTextParser implements GraylogParser {
     private BufferedReader reader;
+    private static final Logger logger = LogManager.getLogger(GraylogTextParser.class);
 
     public void loadFile(String path) {
-        System.out.println(new File(".").getAbsolutePath());
+        logger.info("current directory: "+new File(".").getAbsolutePath());
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(path);
         reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -18,6 +23,7 @@ public class GraylogTextParser implements GraylogParser {
 
     public String getNextLine() {
         if (reader == null) {
+            logger.warn("reader is null - did not load file correctly");
             return null;
         }
         try {
@@ -38,6 +44,7 @@ public class GraylogTextParser implements GraylogParser {
             else
                 builder.append(c);
         }
+        logger.debug("prependBackslashToQuotes: message is - "+builder.toString());
         return builder.toString();
     }
 
@@ -49,16 +56,19 @@ public class GraylogTextParser implements GraylogParser {
         ArrayList<String> replacem = new ArrayList<String>();
         while (m.find()) {
             String x = m.group();
+            logger.debug("found field: "+x);
             matches.add(x);
             replacem.add("_".concat(x));
         }
         for (int x = 0 ; x < matches.size(); x++) {
             message = message.replaceFirst(matches.get(x), replacem.get(x));
         }
+        logger.debug("message after processing fields: "+message);
         message = prependBackslashToQuotes(message);
         return message;
     }
 
-
-
+    public void setDebug(Level level) {
+        logger.setLevel(level);
+    }
 }

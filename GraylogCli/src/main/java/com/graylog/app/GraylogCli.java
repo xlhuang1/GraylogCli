@@ -1,5 +1,10 @@
 package com.graylog.app;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +15,10 @@ public class GraylogCli
 {
     private static GraylogService service;
     private static GraylogParser parser;
+    private static final Logger logger = LogManager.getLogger(GraylogCli.class);
 
     public static void main( String[] args ) throws IOException, InterruptedException {
+        BasicConfigurator.configure();
         final Map<String, List<String>> params = new HashMap<>();
 
         ArrayList<String> options = null;
@@ -38,6 +45,7 @@ public class GraylogCli
 
         String serv = null;
         String addr = null;
+        Boolean debug = false;
         if (params.get("service") != null) {
             serv = params.get("service").get(0);
         } else if (params.get("s") != null) {
@@ -53,8 +61,10 @@ public class GraylogCli
         if (serv == null || serv.equals("http")) {
             if (addr != null) {
                 service = new GraylogHttpService(addr);
+                logger.info("initialized HTTP service with address "+addr);
             } else {
                 service = new GraylogHttpService("192.168.0.25:12201");
+                logger.info("initialized HTTP service with address 192.168.0.25:12201");
             }
         } else {
             System.err.println("Illegal parameter usage");
@@ -72,6 +82,16 @@ public class GraylogCli
             parser.loadFile("sample-messages.txt");
         } else {
             System.err.println("Illegal parameter usage");
+        }
+
+        if (params.get("debug") != null && Boolean.parseBoolean(params.get("debug").get(0))) {
+            logger.setLevel(Level.DEBUG);
+            service.setDebug(Level.DEBUG);
+            parser.setDebug(Level.DEBUG);
+        } else {
+            logger.setLevel(Level.INFO);
+            service.setDebug(Level.INFO);
+            parser.setDebug(Level.INFO);
         }
 
         if (service != null && parser != null) {
