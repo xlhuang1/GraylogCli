@@ -126,7 +126,7 @@ public class GraylogCli
             x = parser.processFieldsForGELF(x);
             service.setMessage(x);
             int rc = service.sendMessage();
-            if (rc != 202) {
+            if ((rc != 202) && (rc != 201)) {
                 logger.warn("Message not sent successfully");
                 // TODO implement resend or error handling
             }
