@@ -2,7 +2,6 @@ package com.graylog.app;
 
 
 import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class GraylogHttpService implements GraylogService {
     private HttpClient client;
     private HttpRequest request;
     private String connectURI = "http://192.168.0.25:12201/gelf";
-    private static final Logger logger = LogManager.getLogger(GraylogHttpService.class);
+    private static final Logger logger = Logger.getLogger(GraylogHttpService.class);
 
     public GraylogHttpService(String connectURI) {
         logger.setLevel(Level.INFO);

@@ -1,7 +1,6 @@
 package com.graylog.app;
 
 import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -11,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class GraylogTextParser implements GraylogParser {
     private BufferedReader reader;
-    private static final Logger logger = LogManager.getLogger(GraylogTextParser.class);
+    private static final Logger logger = Logger.getLogger(GraylogTextParser.class);
 
     public void loadFile(String path) {
         logger.info("current directory: "+new File(".").getAbsolutePath());

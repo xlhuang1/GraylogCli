@@ -2,7 +2,6 @@ package com.graylog.app;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ public class GraylogCli
 {
     private static GraylogService service;
     private static GraylogParser parser;
-    private static final Logger logger = LogManager.getLogger(GraylogCli.class);
+    private static final Logger logger = Logger.getLogger(GraylogCli.class);
 
     public static void main( String[] args ) throws IOException, InterruptedException {
         BasicConfigurator.configure();
@@ -103,13 +102,16 @@ public class GraylogCli
     public static void Run() throws IOException, InterruptedException {
         // goes through all lines and attempts to send through service.
         String x = parser.getNextLine();
+        int count = 1;
         while (x != null) {
             x = parser.getNextLine();
             if (x == null) break;
+            count++;
             x = parser.processFieldsForGELF(x);
             service.setMessage(x);
             service.sendMessage();
         }
+        logger.info("Sent "+String.valueOf(count)+" messages successfully");
     }
 
 
