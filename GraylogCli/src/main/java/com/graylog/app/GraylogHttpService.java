@@ -35,12 +35,13 @@ public class GraylogHttpService implements GraylogService {
     }
 
 
-    public void sendMessage() throws IOException, InterruptedException {
+    public int sendMessage() throws IOException, InterruptedException {
         HttpResponse<String> response = client.send(this.request, HttpResponse.BodyHandlers.ofString());
         logger.debug("Got HTTP response : "+response.statusCode());
         if (!response.body().equals("")) {
             logger.debug("Got HTTP body : "+response.body());
         }
+        return response.statusCode();
     }
 
     public void setMessage(String message) {

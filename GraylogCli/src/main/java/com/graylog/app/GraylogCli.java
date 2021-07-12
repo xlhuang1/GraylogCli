@@ -106,10 +106,14 @@ public class GraylogCli
         while (x != null) {
             x = parser.getNextLine();
             if (x == null) break;
-            count++;
             x = parser.processFieldsForGELF(x);
             service.setMessage(x);
-            service.sendMessage();
+            int rc = service.sendMessage();
+            if (rc != 202) {
+                logger.warn("Message not sent successfully");
+                // TODO implement resend or error handling
+            }
+            count++;
         }
         logger.info("Sent "+String.valueOf(count)+" messages successfully");
     }
