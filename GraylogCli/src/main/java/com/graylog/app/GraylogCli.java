@@ -26,7 +26,7 @@ public class GraylogCli
 
             if (a.charAt(0) == '-') {
                 if (a.length() < 2) {
-                    System.err.println("Error at argument " + a);
+                    logger.error("Error at argument " + a);
                     return;
                 }
 
@@ -37,7 +37,7 @@ public class GraylogCli
                 options.add(a);
             }
             else {
-                System.err.println("Illegal parameter usage");
+                logger.error("Illegal parameter usage");
                 return;
             }
         }
