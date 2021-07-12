@@ -44,6 +44,7 @@ public class GraylogCli
 
         String serv = null;
         String addr = null;
+        String file = null;
         Boolean debug = false;
         if (params.get("service") != null) {
             serv = params.get("service").get(0);
@@ -66,21 +67,37 @@ public class GraylogCli
                 logger.info("initialized HTTP service with address 192.168.0.114:12201");
             }
         } else {
-            System.err.println("Illegal parameter usage");
+            logger.error("Illegal parameter usage");
         }
 
         String pars = null;
         if (params.get("parser") != null) {
             pars = params.get("parser").get(0);
+            if ((params.get("file") != null)) {
+                file = params.get("file").get(0);
+            } else if ((params.get("f") != null)) {
+                file = params.get("f").get(0);
+            }
         } else if (params.get("p") != null) {
             pars = params.get("p").get(0);
+            if ((params.get("file") != null)) {
+                file = params.get("file").get(0);
+            } else if ((params.get("f") != null)) {
+                file = params.get("f").get(0);
+            }
         }
 
         if (pars == null || pars.equals("text")) {
             parser = new GraylogTextParser();
-            parser.loadFile("sample-messages.txt");
+            if (file != null) {
+                logger.info("loading file : "+file);
+                parser.loadFile(file);
+            } else{
+                logger.info("loading file : sample-messages.txt");
+                parser.loadFile("sample-messages.txt");
+            }
         } else {
-            System.err.println("Illegal parameter usage");
+            logger.error("Illegal parameter usage");
         }
 
         if (params.get("debug") != null && Boolean.parseBoolean(params.get("debug").get(0))) {
