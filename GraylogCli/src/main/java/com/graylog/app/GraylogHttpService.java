@@ -25,6 +25,7 @@ public class GraylogHttpService implements GraylogService {
 
         String uri = "http://";
         uri = uri.concat(connectURI).concat("/gelf");
+        this.connectURI = uri;
         logger.info("Creating HTTP Client object with uri : "+uri);
 
         request = HttpRequest.newBuilder()

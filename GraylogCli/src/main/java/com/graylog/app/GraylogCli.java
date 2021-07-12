@@ -63,8 +63,8 @@ public class GraylogCli
                 service = new GraylogHttpService(addr);
                 logger.info("initialized HTTP service with address "+addr);
             } else {
-                service = new GraylogHttpService("192.168.0.25:12201");
-                logger.info("initialized HTTP service with address 192.168.0.25:12201");
+                service = new GraylogHttpService("192.168.0.114:12201");
+                logger.info("initialized HTTP service with address 192.168.0.114:12201");
             }
         } else {
             System.err.println("Illegal parameter usage");
